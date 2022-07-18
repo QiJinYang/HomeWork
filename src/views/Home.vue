@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <qjyButton>默认按钮</qjyButton>
+    <qjyButton type="primary">成功按钮</qjyButton>
+    <qjyButton type="danger">危险按钮</qjyButton>
+    <qjyButton type="warning">警告按钮</qjyButton>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    HelloWorld
+    qjyButton: () => import('../components/button/index.vue')
+  },
+  methods: {
+    handleSubmit() {
+      this.flag = true
+      setTimeout(() => {
+        console.log('123')
+        this.flag = false
+      }, 3000)
+    }
   }
 }
 </script>
