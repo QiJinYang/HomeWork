@@ -6,12 +6,40 @@
       @selection-change="handleSelectionChange"
       @sort-change="handleSortChange"
     >
-      <el-table-column v-if="index" label="序号" type="index" width="55"></el-table-column>
-      <el-table-column v-if="checkbox" type="selection" width="55"></el-table-column>
-      <el-table-column v-for="(item,index) in column" :sort-by="item.sortBy" :sortable="item.sort" :render-header="item.renderHeader"  :key="index" :prop="item.prop" :label="item.label" :width="item.width">
+      <el-table-column
+        v-if="index"
+        label="序号"
+        type="index"
+        width="55"
+      ></el-table-column>
+      <el-table-column
+        v-if="checkbox"
+        type="selection"
+        width="55"
+      ></el-table-column>
+      <el-table-column
+        v-for="(item, index) in column"
+        :sort-by="item.sortBy"
+        :sortable="item.sort"
+        :render-header="item.renderHeader"
+        :key="index"
+        :prop="item.prop"
+        :label="item.label"
+        :width="item.width"
+      >
         <template v-slot="scope">
-          <slot v-if="item.type === 'slot'" :name="item.slot_name" :data="scope.row"></slot>
-          <component v-else :data="scope.row" :config="item" :prop="item.prop" :is="!item.type ? 'com-text' : `com-${item.type}`"></component>
+          <slot
+            v-if="item.type === 'slot'"
+            :name="item.slot_name"
+            :data="scope.row"
+          ></slot>
+          <component
+            v-else
+            :data="scope.row"
+            :config="item"
+            :prop="item.prop"
+            :is="!item.type ? 'com-text' : `com-${item.type}`"
+          ></component>
         </template>
       </el-table-column>
     </el-table>
@@ -21,7 +49,7 @@
 <script>
 const modules = {}
 const files = require.context('../control', true, /index.vue$/i)
-files.keys().forEach(item => {
+files.keys().forEach((item) => {
   const key = item.split('/')
   const name = key[1]
   modules[`com-${name}`] = files(item).default
@@ -64,25 +92,25 @@ export default {
     onLoad: Boolean,
     format: Function
   },
-  data () {
+  data() {
     return {
       tableData: []
     }
   },
-  created () {
+  created() {
     this.initRequest && this.getTableList()
   },
   methods: {
     // 获取复选框选中的数据
-    handleSelectionChange (val) {
+    handleSelectionChange(val) {
       this.$emit('update:checkList', val)
     },
     // 表格数据远程排序
-    handleSortChange ({ column, prop, order }) {
+    handleSortChange({ column, prop, order }) {
       const sortBy = column.sortBy
       this.$emit('sortTable', { sortBy, order })
     },
-    async getTableList () {
+    async getTableList() {
       const url = this.url
       if (!url) {
         throw new Error('url is required')
@@ -114,13 +142,11 @@ export default {
         console.log(e)
       }
     },
-    handleRequest () {
+    handleRequest() {
       this.getTableList()
     }
   }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
